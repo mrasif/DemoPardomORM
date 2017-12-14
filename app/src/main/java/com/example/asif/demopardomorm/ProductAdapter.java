@@ -46,15 +46,6 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.MyViewH
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final Product current=data.get(position);
         holder.tvTitle.setText(current.getProductName());
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context,"Deleted !",Toast.LENGTH_SHORT).show();
-                data.remove(position);
-                notifyItemRemoved(position);
-                current.delete();
-            }
-        });
     }
 
     @Override
@@ -76,8 +67,11 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.MyViewH
 
         @Override
         public void onClick(View view) {
-            //Toast.makeText(context,"Index clicked "+tvIconId.getText(),Toast.LENGTH_SHORT).show();
-            //delete(getPosition());
+            Toast.makeText(context,"Deleted !",Toast.LENGTH_SHORT).show();
+            Product p=data.get(getPosition());
+            p.delete();
+            data.remove(getPosition());
+            notifyItemRemoved(getPosition());
         }
     }
 }
