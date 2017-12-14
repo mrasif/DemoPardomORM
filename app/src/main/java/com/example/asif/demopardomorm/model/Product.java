@@ -13,20 +13,11 @@ import java.util.List;
 
 @Table(name = "products")
 public class Product extends Model{
-
     @Column(name = "product_name")
-    private String productName;
+    public String product_name;
 
     public Product() {
         super();
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
     }
 
     public static List<Product> getAll() {
@@ -35,4 +26,5 @@ public class Product extends Model{
                 .orderBy("Id ASC")
                 .execute();
     }
+
 }

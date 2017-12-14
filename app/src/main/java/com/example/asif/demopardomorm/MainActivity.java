@@ -42,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 product=new Product();
-                String productName=etProductName.getText().toString();
-                product.setProductName(productName);
+                product.product_name=etProductName.getText().toString();
                 product.save();
-                adapter.change();
+                adapter.data=Product.getAll();
+                adapter.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(),"Saved !",Toast.LENGTH_SHORT).show();
                 etProductName.setText("");
-                etProductName.requestFocus();
+//                etProductName.requestFocus();
             }
         });
     }

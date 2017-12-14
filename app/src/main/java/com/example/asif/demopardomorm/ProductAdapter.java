@@ -1,6 +1,7 @@
 package com.example.asif.demopardomorm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,11 +31,6 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.MyViewH
         this.context = context;
     }
 
-    public void change(){
-        this.data = Product.getAll();
-        notifyDataSetChanged();
-    }
-
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view=iflater.inflate(R.layout.product_item,parent,false);
@@ -45,7 +41,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.MyViewH
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final Product current=data.get(position);
-        holder.tvTitle.setText(current.getProductName());
+        holder.tvTitle.setText(current.product_name);
     }
 
     @Override
@@ -63,15 +59,25 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.MyViewH
             tvTitle=itemView.findViewById(R.id.tvProduct);
             btnDelete=itemView.findViewById(R.id.btnDelete);
             btnDelete.setOnClickListener(this);
+            tvTitle.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(context,"Deleted !",Toast.LENGTH_SHORT).show();
             Product p=data.get(getPosition());
-            p.delete();
-            data.remove(getPosition());
-            notifyItemRemoved(getPosition());
+            switch (view.getId()){
+                case R.id.btnDelete:
+                    Toast.makeText(context,"Deleted !",Toast.LENGTH_SHORT).show();
+                    p.delete();
+                    data.remove(getPosition());
+                    notifyItemRemoved(getPosition());
+                    break;
+                case R.id.tvProduct:
+                    Intent intent=new Intent(context,DetailsActivity.class);
+                    intent.putExtra("pid",p.getId());
+                    context.startActivity(intent);
+            }
+
         }
     }
 }
